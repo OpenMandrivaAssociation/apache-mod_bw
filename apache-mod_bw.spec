@@ -5,14 +5,13 @@
 
 Summary:        Bandwidth administration module for Apache HTTPD
 Name:		apache-%{mod_name}
-Version:	0.7
-Release:	%mkrel 4
+Version:	0.8
+Release:	%mkrel 1
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.ivn.cl/apache/
 Source0: 	http://prdownloads.sourceforge.net/bwmod/mod_bw-%{version}.tar.bz2
-Source1:	%{mod_conf}.bz2
-Patch0:		mod_bw-0.7-fix-apt_atomic_add-undefined_symbol.patch
+Source1:	%{mod_conf}
 Requires(pre):	rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):	apache-conf >= 2.2.0
@@ -35,11 +34,12 @@ mod_bw is a bandwidth administration module for Apache HTTPD 2.0.x
 %prep
 
 %setup -q -n mod_bw
-%patch0 -p1 -b .apr_atomic
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
+
+cp %{SOURCE1} %{mod_conf}
 
 %build
 
@@ -52,7 +52,7 @@ install -d %{buildroot}%{_libdir}/apache-extramodules
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 
 install -m0755 .libs/*.so %{buildroot}%{_libdir}/apache-extramodules/
-bzcat %{SOURCE1} > %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
+install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
 
 install -d %{buildroot}%{_var}/www/html/addon-modules
 ln -s ../../../..%{_docdir}/%{name}-%{version} %{buildroot}%{_var}/www/html/addon-modules/%{name}-%{version}
@@ -78,5 +78,3 @@ fi
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
 %{_var}/www/html/addon-modules/*
-
-
