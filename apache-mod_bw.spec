@@ -6,7 +6,7 @@
 Summary:        Bandwidth administration module for Apache HTTPD
 Name:		apache-%{mod_name}
 Version:	0.8
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.ivn.cl/apache/
@@ -20,8 +20,6 @@ Requires:	apache-conf >= 2.2.0
 Requires:	apache >= 2.2.0
 BuildRequires:	apache-devel >= 2.2.0
 BuildRequires:	file
-Provides:	apache2-mod_bw
-Obsoletes:	apache2-mod_bw
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
