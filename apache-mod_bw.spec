@@ -9,7 +9,7 @@ Version:	0.8
 Release:	%mkrel 11
 Group:		System/Servers
 License:	Apache License
-URL:		http://www.ivn.cl/apache/
+URL:		https://www.ivn.cl/apache/
 Source0: 	http://prdownloads.sourceforge.net/bwmod/mod_bw-%{version}.tar.bz2
 Source1:	%{mod_conf}
 Requires(pre):	rpm-helper
